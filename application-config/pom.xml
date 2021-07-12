@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>hr.fina.eracun</groupId>
+	<artifactId>application-config</artifactId>
+	<version>0-0-11</version>
+	<packaging>jar</packaging>
+	<name>application-config</name>
+
+	<prerequisites>
+		<maven>3.2.2</maven>
+	</prerequisites>
+
+	<properties>
+
+		<!-- CVS repozitory info -->
+		<!-- <repository.path></repository.path> -->
+
+		<!-- Postavke za sustav isporuka (CMS) -->
+		<!-- <cms.ftp.server></cms.ftp.server> -->
+		<!-- <cms.ftp.remotedir></cms.ftp.remotedir> -->
+		<!-- <cms.url></cms.url> -->
+
+
+		<!-- Generic maven/java properties -->
+		<java.version>1.7</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8
+		</project.reporting.outputEncoding>
+		<maven.test.failure.ignore>true</maven.test.failure.ignore>
+		<timestamp>${maven.build.timestamp}</timestamp>
+		<maven.build.timestamp.format>yyyy-MM-dd HH:mm
+		</maven.build.timestamp.format>
+
+		<!-- Maven archiva -->
+		<artifactory.local.releases>http://mavenprod.unix.fina.hr:8081/artifactory/libs-release-local
+		</artifactory.local.releases>
+		<artifactory.local.snapshots>http://mavenprod.unix.fina.hr:8081/artifactory/libs-snapshot-local
+		</artifactory.local.snapshots>
+
+		<!-- ********************* -->
+		<!-- Dependencies versions -->
+		<!-- ********************* -->
+		<version.springframework>4.3.8.RELEASE</version.springframework>
+		<version.aspectj>1.8.9</version.aspectj>
+		<version.log4j>1.2.17</version.log4j>
+		<version.slf4j>1.7.21</version.slf4j>
+		<version.javax.inject>1</version.javax.inject>
+		<version.jsp-api>2.2</version.jsp-api>
+		<version.jstl>1.2</version.jstl>
+		<version.servlet-api>3.1.0</version.servlet-api>
+		<version.validation-api>1.1.0.Final</version.validation-api>
+		<version.junit>4.12</version.junit>
+		<version.spring-test>4.2.6.RELEASE</version.spring-test>
+		<version.tiles>3.0.5</version.tiles>
+		<version.commons-lang3>3.4</version.commons-lang3>
+		<version.commons-codec>1.10</version.commons-codec>
+		<version.commons-io>2.5</version.commons-io>
+		<version.jackson>2.7.4</version.jackson>
+
+	</properties>
+
+	<!-- Slanje na maven repo na razini fine -->
+	<distributionManagement>
+		<repository>
+			<id>central</id>
+			<name>mavenprod.unix.fina.hr-local-releases</name>
+			<url>${artifactory.local.releases}</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>mavenprod.unix.fina.hr-local-snapshots</name>
+			<url>${artifactory.local.snapshots}</url>
+		</snapshotRepository>
+	</distributionManagement>
+
+
+
+	<!-- Skidanje s maven repo -->
+	<repositories>
+		<repository>
+			<id>project.local.repository</id>
+			<name>Project Local Repository</name>
+			<url>file://${basedir}/support/repo</url>
+			<releases>
+				<updatePolicy>always</updatePolicy>
+			</releases>
+			<snapshots>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+		</repository>
+		<repository>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<id>central</id>
+			<name>libs-release</name>
+			<url>http://mavenprod.unix.fina.hr:8081/artifactory/libs-release
+			</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${version.springframework}</version>
+		</dependency>
+
+		<dependency>
+			<artifactId>slf4j-api</artifactId>
+			<groupId>org.slf4j</groupId>
+			<version>${version.slf4j}</version>
+		</dependency>
+		<dependency>
+			<artifactId>jcl-over-slf4j</artifactId>
+			<groupId>org.slf4j</groupId>
+			<version>${version.slf4j}</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<configuration>
+					<additionalProjectnatures>
+						<projectnature>org.springframework.ide.eclipse.core.springnature
+						</projectnature>
+					</additionalProjectnatures>
+					<additionalBuildcommands>
+						<buildcommand>org.springframework.ide.eclipse.core.springbuilder
+						</buildcommand>
+					</additionalBuildcommands>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>true</downloadJavadocs>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<inherited>false</inherited>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>${basedir}</directory>
+							<includes>
+								<include>sonar-project.properties</include>
+							</includes>
+						</fileset>
+						<fileset>
+							<directory>${basedir}/FRM/dist</directory>
+							<includes>
+								<include>*</include>
+							</includes>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+
+			<!-- Dodaj direktorije kao source direktorij u projekt -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>add-src-dev</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>src/dev/resources</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Generate sonar.properites -->
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<inherited>false</inherited>
+				<executions>
+					<execution>
+						<id>generate-sonar-properties</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}</outputDirectory>
+							<overwrite>true</overwrite>
+							<resources>
+								<resource>
+									<directory>${basedir}/FRM/build/resources/sonar</directory>
+									<filtering>true</filtering>
+									<includes>
+										<include>sonar-project.properties</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Generate verzija.properties -->
+			<plugin>
+				<artifactId>replacer</artifactId>
+				<groupId>com.google.code.maven-replacer-plugin</groupId>
+				<executions>
+					<execution>
+						<id>generate-application-version-properties</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>replace</goal>
+						</goals>
+						<configuration>
+							<ignoreErrors>true</ignoreErrors>
+							<file>${basedir}/FRM/build/resources/version-java/VerzijaTemplate.properties
+							</file>
+							<outputDir>${basedir}/src/main/resources</outputDir>
+							<outputFile>verzija.properties</outputFile>
+							<replacements>
+								<replacement>
+									<token>@project-name@</token>
+									<value>${project.name}</value>
+								</replacement>
+								<replacement>
+									<token>@project-description@</token>
+									<value>${project.description}</value>
+								</replacement>
+								<replacement>
+									<token>@ver-stripes@</token>
+									<value>v${project.version}</value>
+								</replacement>
+								<replacement>
+									<token>@timestamp@</token>
+									<value>${timestamp}</value>
+								</replacement>
+								<replacement>
+									<token>@repository-path@</token>
+									<value>${repository.path}</value>
+								</replacement>
+								<replacement>
+									<token>@cms-url@</token>
+									<value>${cms.url}</value>
+								</replacement>
+								<replacement>
+									<token>@cms-ftp-server@</token>
+									<value>${cms.ftp.server}</value>
+								</replacement>
+								<replacement>
+									<token>@cms-ftp-remote-dir@</token>
+									<value>${cms.ftp.remotedir}</value>
+								</replacement>
+							</replacements>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- ZIP -->
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>create-distrubution</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+
+						<configuration>
+							<finalName>${project.artifactId}_${project.version}</finalName>
+							<outputDirectory>${basedir}/FRM/dist</outputDirectory>
+							<appendAssemblyId>false</appendAssemblyId>
+							<descriptors>
+								<descriptor>${basedir}/FRM/build/assembly.xml</descriptor>
+							</descriptors>
+							<appendAssemblyId>true</appendAssemblyId>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>com.google.code.maven-replacer-plugin</groupId>
+										<artifactId>replacer</artifactId>
+										<versionRange>[1.5.3,)</versionRange>
+										<goals>
+											<goal>replace</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>
