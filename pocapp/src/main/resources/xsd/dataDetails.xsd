@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+           xmlns:st="http://aaa.hr/test/v0/simpleTypes"
+           xmlns="http://aaa.hr/test/v0/DataDetails"
+           targetNamespace="http://aaa.hr/test/v0/DataDetails"
+           elementFormDefault="unqualified" attributeFormDefault="unqualified" version="51.40" vc:minVersion="1.1">
+
+    <!--===== IMPORTS =====-->
+    <xs:import namespace="http://aaa.hr/test/v0/simpleTypes" schemaLocation="./simpleSchema.xsd"/>
+    <!--===== IMPORTS =====-->
+
+    <!--==========================================================-->
+    <!--===== Root Element                                        -->
+    <!--==========================================================-->
+    <xs:element name="DataDetails" type="DataDetailsType"/>
+
+    <!--==========================================================-->
+    <!--===== Root Element Content                                -->
+    <!--==========================================================-->
+    <xs:complexType name="DataDetailsType">
+        <xs:sequence>
+            <xs:element name="Data" type="DataType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="DataType">
+        <xs:sequence>
+            <xs:element name="Operation" type="Operation"/>
+            <xs:element name="Origin" type="OfficeType"/>
+            <xs:element name="Destination" type="OfficeType"/>
+            <xs:element minOccurs="0" name="DateOfStart" type="st:DateType"/>
+            <xs:element minOccurs="0" name="AccountValue" type="st:Decimal_9_2"/>
+            <xs:element minOccurs="0" name="Exporter" type="OfficeType"/>
+            <xs:element minOccurs="0" maxOccurs="9" name="VisitingLocations" type="OfficeType"/>
+        </xs:sequence>
+    </xs:complexType>
+	
+	<xs:complexType name="Operation">
+        <xs:sequence>
+            <xs:element name="ID" type="st:Alphanumeric_Max11"/>
+            <xs:element name="arrivalDateTime" type="st:DateTimeType"/>
+            <xs:element minOccurs="0" name="storingFlag" type="st:Numeric_1"/>
+            <xs:element name="type" type="st:Alphanumeric_Max5"/>
+            <xs:element minOccurs="0" name="additionalType" type="st:Alpha_1"/>
+            <xs:element minOccurs="0" name="acceptanceDate" type="st:DateType"/>
+        </xs:sequence>
+    </xs:complexType>
+	
+   <xs:complexType name="OfficeType">
+        <xs:sequence>
+            <xs:element name="referenceNumber" type="st:RefNumType"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

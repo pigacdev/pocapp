@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+<h1>Form</h1>
+<form action="#" th:action="@{/data/input}" th:object="${details}" method="post">
+    <p>Id: <input type="text" th:field="*{id}" /></p>
+    <p>Storing flag: <input type="text" th:field="*{storingFlag}" /></p>
+    <p>Additional Type: <input type="text" th:field="*{additionalType}" /></p>
+    <p>Acceptance Date: <input type="date" th:field="*{acceptanceDate}" /></p>
+    <div th:switch="${details.acceptanceDate.before(#dates.createNow())}">
+        <span th:case="true">Case 1</span>
+        <span th:case="false">Case 2</span>
+    </div>
+    <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+</form>
+</body>
+</html>

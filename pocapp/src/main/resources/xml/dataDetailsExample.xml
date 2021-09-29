@@ -1,0 +1,36 @@
+<dat:DataDetails xmlns:dat="http://aaa.hr/test/v0/DataDetails">
+  <Data>
+    <Operation>
+      <ID>token</ID>
+      <arrivalDateTime>2008-09-29T03:49:45</arrivalDateTime>
+      <!--Optional:-->
+      <storingFlag>1</storingFlag>
+      <type>token</type>
+      <!--Optional:-->
+      <additionalType>a</additionalType>
+      <!--Optional:-->
+      <acceptanceDate>2014-09-19</acceptanceDate>
+    </Operation>
+    <Origin>
+      <referenceNumber>AA123456</referenceNumber>
+    </Origin>
+    <Destination>
+      <referenceNumber>BB123456</referenceNumber>
+    </Destination>
+    <!--Optional:-->
+    <DateOfStart>2006-08-19</DateOfStart>
+    <!--Optional:-->
+    <AccountValue>1000.00000</AccountValue>
+    <!--Optional:-->
+    <Exporter>
+      <referenceNumber>CC123456</referenceNumber>
+    </Exporter>
+    <!--0 to 9 repetitions:-->
+    <VisitingLocations>
+      <referenceNumber>DD123456</referenceNumber>
+    </VisitingLocations>
+    <VisitingLocations>
+      <referenceNumber>EE123456</referenceNumber>
+    </VisitingLocations>
+  </Data>
+</dat:DataDetails>

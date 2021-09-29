@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<h1>Data details</h1>
+<p th:text="'Operation id: ' + ${details.id}"/>
+<p th:text="'Arrival Time: ' + ${details.arrivalDateTime}"/>
+<p th:text="'Storing Flag: ' + ${details.storingFlag}"/>
+<p th:text="'Type: ' + ${details.type}"/>
+<p th:text="'Additional Type: ' + ${details.additionalType}"/>
+<p th:text="'Acceptance Date: ' + ${details.acceptanceDate}"/>
+<p th:text="'Origin Reference Number: ' + ${details.originReferenceNumber}"/>
+<p th:text="'Destination Reference Number: ' + ${details.destinationReferenceNumber}"/>
+<p th:text="'Date Of Start: ' + ${details.dateOfStart}"/>
+<p th:text="'Account Value: ' + ${details.accountValue}"/>
+<p th:text="'Exporter Reference Number: ' + ${details.exporterReferenceNumber}"/>
+<p th:each="location : ${details.visitingLocations}">
+    <span th:text="'Visiting Location: ' + ${location.referenceNumber}"></span>
+</p>
+<a href="/data/input">Submit another data</a>
+</body>
+</html>

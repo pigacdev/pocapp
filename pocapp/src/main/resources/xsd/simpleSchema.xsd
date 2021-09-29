@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://aaa.hr/test/v0/simpleTypes"
+           targetNamespace="http://aaa.hr/test/v0/simpleTypes"
+           attributeFormDefault="qualified"
+           elementFormDefault="qualified"
+           version="1.00">
+		   
+   <xs:simpleType name="AlphaType">
+        <xs:annotation>
+            <xs:documentation>Base class for all aN and a..N types</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token"/>
+    </xs:simpleType>
+	
+	<xs:simpleType name="AlphaNumType">
+        <xs:annotation>
+            <xs:documentation>Base class for all anN and an..N types</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token"/>
+    </xs:simpleType>
+		   
+   <xs:simpleType name="DecType">
+		<xs:annotation>
+			<xs:documentation>Base class for all n..N,M types</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal"/>
+    </xs:simpleType>
+	
+	<xs:simpleType name="NumType">
+        <xs:annotation>
+            <xs:documentation>Base class for all nN and n..N types</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token"/>
+    </xs:simpleType>
+		   
+    <xs:simpleType name="Alpha_1">
+        <xs:restriction base="AlphaType">
+            <xs:pattern value="[a-zA-Z]{1}"/>
+        </xs:restriction>
+    </xs:simpleType>
+	
+    <xs:simpleType name="Alphanumeric_Max11">
+        <xs:restriction base="AlphaNumType">
+            <xs:pattern value=".{1,11}"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Alphanumeric_Max5">
+        <xs:restriction base="AlphaNumType">
+            <xs:pattern value=".{1,5}"/>
+        </xs:restriction>
+    </xs:simpleType>
+	
+	<xs:simpleType name="DateTimeType">
+        <xs:annotation>
+            <xs:documentation>The date is in the Common Era (minus sign in years is not permitted) and time zone
+                although not included UTC is implied
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:dateTime">
+            <xs:pattern value="\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="DateType">
+        <xs:annotation>
+            <xs:documentation>Calendar dates are represented yyyy-mm-dd format, following ISO 8601. This is a W3C XML
+                Schema date type, but without the optional timezone data.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:date">
+            <xs:pattern value="\d{4}-\d{2}-\d{2}(\.\d+)?"/>
+        </xs:restriction>
+    </xs:simpleType>
+	
+    <xs:simpleType name="Numeric_1">
+        <xs:restriction base="NumType">
+            <xs:pattern value="[0-9]{1}"/>
+        </xs:restriction>
+    </xs:simpleType>
+	
+	<xs:simpleType name="RefNumType">
+        <xs:annotation>
+            <xs:documentation>Reference Number (format: an8)</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="AlphaNumType">
+            <xs:length value="8"/>
+            <xs:pattern value="[A-Z]{2}[A-Z0-9]{6}"/>
+        </xs:restriction>
+    </xs:simpleType>
+	
+	<xs:simpleType name="Decimal_9_2">
+        <xs:restriction base="DecType">
+            <xs:totalDigits value="9"/>
+            <xs:fractionDigits value="2"/>
+        </xs:restriction>
+    </xs:simpleType>
+		   
+</xs:schema>
